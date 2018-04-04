@@ -2,14 +2,15 @@
 
 #include "essentials.hpp"
 using namespace std;
+using namespace ess;
 
-variableTable::variableTable () {//Constructor of variableTable classs
-  variableTable::numberOfVariables=0;
-  variableTable::nameOfVariable.clear();
-  variableTable::valueOfVariable.clear();
+ess::variableTable::variableTable () {//Constructor of variableTable classs
+  ess::variableTable::numberOfVariables=0;
+  ess::variableTable::nameOfVariable.clear();
+  ess::variableTable::valueOfVariable.clear();
 }
 
-int variableTable::addVariable(std::string name, double value){//Inserts a variable at the variable table
+int ess::variableTable::addVariable(std::string name, double value){//Inserts a variable at the variable table
   if (numberOfVariables==UINT_MAX){
     cout << "VariableTable at full size, can't add more\n";
     return 1;
@@ -20,7 +21,7 @@ int variableTable::addVariable(std::string name, double value){//Inserts a varia
   return 0;
 }
 
-int variableTable::removeVariable(std::string name){//Removes a variable from the variable table
+int ess::variableTable::removeVariable(std::string name){//Removes a variable from the variable table
   if (numberOfVariables==0){
     cout << "No variables in this table\n";
     return 1;
@@ -38,7 +39,7 @@ int variableTable::removeVariable(std::string name){//Removes a variable from th
   return 1;
 }
 
-int variableTable::changeValueOfVariable(std::string name, double value){//Change the value of a variable in the variable table
+int ess::variableTable::changeValueOfVariable(std::string name, double value){//Change the value of a variable in the variable table
   if (numberOfVariables==0){
     cout << "No variables in this table\n";
     return 1;
@@ -54,7 +55,7 @@ int variableTable::changeValueOfVariable(std::string name, double value){//Chang
   return 1;
 }
 
-double variableTable::getValueOfVariable(std::string name){//Get the value of the variable in the variable table
+double ess::variableTable::getValueOfVariable(std::string name){//Get the value of the variable in the variable table
   if (numberOfVariables==0){
     cout << "No variables in this table\n";
     return 0;
@@ -69,7 +70,7 @@ double variableTable::getValueOfVariable(std::string name){//Get the value of th
   return 0;
 }
 
-int variableTable::printVariableTable(){//Display the entire variable table
+int ess::variableTable::printVariableTable(){//Display the entire variable table
   if (numberOfVariables==0){
     cout << "No variables in this table\n";
     return 1;
