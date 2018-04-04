@@ -14,12 +14,14 @@
 #ifndef ESSENTIALS_NUM_METHODS
 #define ESSENTIALS_NUM_METHODS
 namespace ess{
-  typedef enum oper{
-    oper_add;
-    oper_min;
-    oper_mul;
-    oper_div;
-  }
+
+enum oper{
+    oper_add,
+    oper_min,
+    oper_mul,
+    oper_div,
+  };
+
   class variableTable{//Contains all the variables of a function
     private://Variables of a variableTable entity
       unsigned int numberOfVariables;
@@ -36,24 +38,42 @@ namespace ess{
   };
 
   class actionnode{//Certain Mathematical Function
-    private://Node operator
+    private://Node private variables
+      bool leaf;
+      double value=0;
       ess::oper oper;
-      
+      ess::actionnode *left;
+      ess::actionnode *right;
+    public://Constructor
+      actionnode();
+      actionnode(double number);
+      actionnode(ess::oper oper);
+    public:
+      double calculate();
+      int printnode();
+      int setleft(actionnode *left1);
+      int setright(actionnode *right1);
   };
 
-  class actiontree{
+  // class actiontree{
+  //   private://Private Variables
+  //     ess::actionnode *top;
+  //   public://Constructor
+  //     actiontree(ess::actionnode *top);
+  //   public://Public functions
+  //     double calculate();
+  //     int printtree();
+  // };
 
-  };
 
-
-  class mathfun{
-    private://Variables of a mathematical function
-      variableTable vars;
-      actiontree acts;
-    public://Mathematical Function Constructor
-      mathfun ();
-    public://Mathematical Function Object Methods
-      int parsefunc();//Initializes and parses function from a string
-  };
+  // class mathfun{
+  //   private://Variables of a mathematical function
+  //     variableTable vars;
+  //     actiontree acts;
+  //   public://Mathematical Function Constructor
+  //     mathfun ();
+  //   public://Mathematical Function Object Methods
+  //     int parsefunc();//Initializes and parses function from a string
+  // };
 }
 #endif

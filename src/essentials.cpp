@@ -81,3 +81,97 @@ int ess::variableTable::printVariableTable(){//Display the entire variable table
   }
   return 0;
 }
+
+//-------------------------------------------------------------------
+//Action node code
+//-------------------------------------------------------------------
+
+ess::actionnode::actionnode(){
+  ess::actionnode::leaf=false;
+  ess::actionnode::value=0;
+  ess::actionnode::oper=oper_add;
+  ess::actionnode::left=NULL;
+  ess::actionnode::right=NULL;
+}
+
+ess::actionnode::actionnode(double number){
+  ess::actionnode::leaf=true;
+  ess::actionnode::value=number;
+  ess::actionnode::oper=oper_add;
+  ess::actionnode::left=NULL;
+  ess::actionnode::right=NULL;
+}
+
+ess::actionnode::actionnode(ess::oper oper){
+  ess::actionnode::leaf=false;
+  ess::actionnode::value=0;
+  ess::actionnode::oper=oper;
+  ess::actionnode::left=NULL;
+  ess::actionnode::right=NULL;
+}
+
+double ess::actionnode::calculate(){
+  switch (leaf)
+  {
+    case true:
+      return value;
+      break;
+    case false:
+      if (left == NULL || right == NULL)
+      {
+        return 0;
+        break;
+      }
+      switch (oper)
+      {
+        case oper_add:
+          return left->calculate()+right->calculate();
+          break;
+        case oper_min:
+          return left->calculate()-right->calculate();
+          break;
+        case oper_mul:
+          return left->calculate()*right->calculate();
+          break;
+        case oper_div:
+          return left->calculate()/right->calculate();
+          break;
+      }
+  }
+}
+
+int ess::actionnode::printnode(){
+  switch (leaf)
+  {
+    case false:
+      left->printnode();
+      switch (oper){
+        case oper_add:
+          std::cout << '+';
+          break;
+        case oper_min:
+          std::cout << '-';
+          break;
+        case oper_mul:
+          std::cout << '*';
+          break;
+        case oper_div:
+          std::cout << '/';
+          break;
+        }
+      right->printnode();
+    break;
+    case true:
+      std::cout << value;
+  }
+  return 0;
+}
+
+int ess::actionnode::setleft(actionnode *left1){
+  left=left1;
+  return 0;
+}
+int ess::actionnode::setright(actionnode *right1){
+  right = right1;
+  return 0;
+}
