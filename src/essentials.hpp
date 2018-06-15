@@ -10,9 +10,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
+#include <cmath>
 
 #ifndef ESSENTIALS_NUM_METHODS
 #define ESSENTIALS_NUM_METHODS
+
 namespace ess{
 
 enum oper{
@@ -22,7 +24,14 @@ enum oper{
     oper_div,
   };
 
-  class variableTable{//Contains all the variables of a function
+enum actType{
+  act_null,
+  act_num,
+  act_oper,
+  act_funct,
+};
+
+  class variableTable{//Contains all the variables
     private://Variables of a variableTable entity
       unsigned int numberOfVariables;
       std::vector<std::string> nameOfVariable;
@@ -39,8 +48,9 @@ enum oper{
 
   class actionnode{//Certain Mathematical Function
     private://Node private variables
-      bool leaf;
+      ess::actType act;
       double value=0;
+      std::vector<std::string> actFunPara;
       ess::oper oper;
       ess::actionnode *left;
       ess::actionnode *right;
@@ -55,25 +65,24 @@ enum oper{
       int setright(actionnode *right1);
   };
 
-  // class actiontree{
-  //   private://Private Variables
-  //     ess::actionnode *top;
-  //   public://Constructor
-  //     actiontree(ess::actionnode *top);
-  //   public://Public functions
-  //     double calculate();
-  //     int printtree();
-  // };
+  class actiontree{
+    private://Private Variables
+      ess::actionnode *top;
+    public://Constructor
+      actiontree(ess::actionnode *topin);
+    public://Public functions
+      double calculate();
+      int printtree();
+  };
 
 
-  // class mathfun{
-  //   private://Variables of a mathematical function
-  //     variableTable vars;
-  //     actiontree acts;
-  //   public://Mathematical Function Constructor
-  //     mathfun ();
-  //   public://Mathematical Function Object Methods
-  //     int parsefunc();//Initializes and parses function from a string
-  // };
+  class mathfun{
+    private://Variables of a mathematical function
+      actiontree acts;
+    public://Mathematical Function Constructor
+      mathfun ();
+    public://Mathematical Function Object Methods
+      int parsefunc();//Initializes and parses function from a string
+  };
 }
 #endif

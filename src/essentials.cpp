@@ -87,36 +87,41 @@ int ess::variableTable::printVariableTable(){//Display the entire variable table
 //-------------------------------------------------------------------
 
 ess::actionnode::actionnode(){
-  ess::actionnode::leaf=false;
+  ess::actionnode::act=act_null;
   ess::actionnode::value=0;
+  ess::actionnode::actFuncPara.empty();
   ess::actionnode::oper=oper_add;
   ess::actionnode::left=NULL;
   ess::actionnode::right=NULL;
 }
 
 ess::actionnode::actionnode(double number){
-  ess::actionnode::leaf=true;
+  ess::actionnode::act=act_num;
   ess::actionnode::value=number;
+  ess::actionnode::actFuncPara.empty();
   ess::actionnode::oper=oper_add;
   ess::actionnode::left=NULL;
   ess::actionnode::right=NULL;
 }
 
 ess::actionnode::actionnode(ess::oper oper){
-  ess::actionnode::leaf=false;
+  ess::actionnode::act=act_oper;
   ess::actionnode::value=0;
+  ess::actionnode::actFuncPara.empty();
   ess::actionnode::oper=oper;
   ess::actionnode::left=NULL;
   ess::actionnode::right=NULL;
 }
 
 double ess::actionnode::calculate(){
-  switch (leaf)
+  switch (act)
   {
-    case true:
+    case act_null:
+    return std::nan("");
+    case act_num:
       return value;
       break;
-    case false:
+    case act_oper:
       if (left == NULL || right == NULL)
       {
         return 0;
@@ -141,9 +146,12 @@ double ess::actionnode::calculate(){
 }
 
 int ess::actionnode::printnode(){
-  switch (leaf)
+  switch (act)
   {
-    case false:
+    case act_null:
+      std::cout << "***NULLNODE***";
+      break;
+    case act_oper:
       left->printnode();
       switch (oper){
         case oper_add:
@@ -161,7 +169,7 @@ int ess::actionnode::printnode(){
         }
       right->printnode();
     break;
-    case true:
+    case act_num:
       std::cout << value;
   }
   return 0;
@@ -174,4 +182,24 @@ int ess::actionnode::setleft(actionnode *left1){
 int ess::actionnode::setright(actionnode *right1){
   right = right1;
   return 0;
+}
+
+ess::actiontree::actiontree(ess::actionnode *topin){
+  top=topin;
+}
+
+double ess::actiontree::calculate(){
+  return top->calculate();
+}
+
+int ess::actiontree::printtree(){
+  top->printnode();
+  std::cout << std::endl;
+  return 0;
+}
+
+ess::mathfun::parsefunc(){
+  std::string a;
+  cin >> &a;
+  a. 
 }
